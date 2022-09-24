@@ -29,3 +29,20 @@ Y ~ N(mu, sigma)
 ```
 
 Then you can estimate B0 and B1 with maximium likelihood and optionally generate their respective sampling distributions to get their standard errors.
+
+# Building from Source
+Git clone the project and build with CMake.
+
+**CMake flags:**
+
+* `-DCMAKE_BUILD_TYPE`
+  * `Release` (default)
+  * `Debug`
+
+Sample build command:
+
+`cmake -DCMAKE_BUILD_TYPE=Debug ..`
+
+**Build Type Flags:**
+* `Debug`: `-O0 -g -Wall`
+* `Release`: `-O2 -Wall`
