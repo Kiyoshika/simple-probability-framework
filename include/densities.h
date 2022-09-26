@@ -5,14 +5,19 @@
 #include <stddef.h>
 
 // forward declaration
-struct param_t;
+struct distribution_t;
 
 // Bernoulli distribution to model binary 0 and 1 outcomes with
-// a single parameter, theta (params[0]).
+// a single parameter, theta (dist->parameters[0]).
 // P(x; theta) = theta^x * (1-theta)^(1-x)
 float spf_density_bernoulli(
-    const float x, 
-    struct param_t** params,
-    const void* data);
+    float x, 
+    struct distribution_t* dist);
+
+// logarithm of spf_density_bernoulli.
+// used in optimization algorithm when computing MLE estimates.
+float spf_log_density_bernoulli(
+    float x,
+    struct distribution_t* dist);
 
 #endif

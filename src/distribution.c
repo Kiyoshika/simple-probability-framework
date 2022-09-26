@@ -35,17 +35,19 @@ void spf_dist_set_param(
 }
 
 float spf_dist_evaluate(
-    const struct distribution_t* dist,
-    const float x)
+    struct distribution_t* dist,
+    float x)
 {
-    return dist->density(x, dist->parameters, dist->data);
+    return dist->density(x, dist);
 }
 
 void spf_dist_set_density(
     struct distribution_t** dist,
-    float (*density)(const float, struct param_t**, const void*))
+    float (*density)(float, struct distribution_t*),
+    float (*log_density)(float, struct distribution_t*))
 {
     (*dist)->density = density;
+    (*dist)->log_density = log_density;
 }
 
 void spf_dist_free(

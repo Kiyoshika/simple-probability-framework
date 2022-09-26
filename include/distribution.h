@@ -27,7 +27,10 @@ struct distribution_t
     size_t n_parameters;
 
     // probability density
-    float (*density)(const float x, struct param_t** parameters, const void* data);
+    float (*density)(float x, struct distribution_t*);
+
+    // log probability density
+    float (*log_density)(float x, struct distribution_t*);
 };
 
 // create new distribution with N (empty) parameters.
@@ -45,12 +48,13 @@ void spf_dist_set_param(
 
 void spf_dist_set_density(
     struct distribution_t** dist,
-    float (*density)(const float, struct param_t**, const void*));
+    float (*density)(float, struct distribution_t*),
+    float (*log_density)(float, struct distribution_t*));
 
 // evaluate probability density/mass
 float spf_dist_evaluate(
-    const struct distribution_t* dist,
-    const float x);
+    struct distribution_t* dist,
+    float x);
 
 void spf_dist_free(
     struct distribution_t** dist);

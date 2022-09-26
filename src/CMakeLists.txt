@@ -13,10 +13,14 @@ add_library(spfparam param.c)
 target_include_directories(spfparam PUBLIC ${SPF_SOURCE_DIR}/include)
 target_link_libraries(spfparam spferr)
 
+add_library(spfderivatives derivatives.c)
+target_include_directories(spfderivatives PUBLIC ${SPF_SOURCE_DIR}/include)
+target_link_libraries(spfderivatives spfparam spfexpression)
+
 # main encapsulating library
 add_library(spf distribution.c)
 target_include_directories(spf PUBLIC ${SPF_SOURCE_DIR}/include)
-target_link_libraries(spf spfparam spferr spfdensities spfexpression)
+target_link_libraries(spf spfparam spferr spfdensities spfexpression spfderivatives)
 
 add_executable(driver driver.c)
 target_include_directories(driver PUBLIC ${SPF_SOURCE_DIR}/include)
