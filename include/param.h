@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 enum param_type_e
 {
@@ -30,6 +31,17 @@ struct param_t
 
 struct param_t* spf_param_create(
     enum param_type_e type);
+
+struct param_t* spf_param_create_scalar(
+    float value);
+
+struct param_t* spf_param_create_expression(
+    struct expression_t* expression);
+
+struct param_t** spf_param_create_list(
+    const size_t n_parameters,
+    struct param_t* param,
+    ...);
 
 void spf_param_set_value(
     struct param_t** param, float value);
