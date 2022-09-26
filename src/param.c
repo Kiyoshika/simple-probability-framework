@@ -15,6 +15,46 @@ struct param_t* spf_param_create(
     return param;
 }
 
+struct param_t* spf_param_create_scalar(
+    float value)
+{
+    struct param_t* param = spf_param_create(SCALAR);
+    spf_param_set_value(&param, value);
+
+    return param;
+}
+
+struct param_t* spf_param_create_expression(
+    struct expression_t* expression)
+{
+    struct param_t* param = spf_param_create(EXPRESSION);
+    spf_param_set_expression(&param, expression);
+
+    return param;
+}
+
+struct param_t** spf_param_create_list(
+    const size_t n_parameters,
+    struct param_t* param,
+    ...)
+{
+    struct param_t** parameters = malloc(sizeof(struct param_t*) * n_parameters);
+    if (!parameters)
+        spf_err("spf_param_create_list: Couldn't allocate memory for parameter list.");
+    
+    // due to annoyingness with va_list, the dynamic args only start after
+    // the first parameter is passed, so we set the first entry manually
+    parameters[0] = param;
+
+    va_list param_list;
+    va_start(param_list, param);
+    for (size_t p = 1; p < n_parameters; ++p)
+        parameters[p] = va_arg(param_list, struct param_t*);
+    va_end(param_list);
+
+    return parameters;
+}
+
 void spf_param_set_value(
     struct param_t** param,
     float value)

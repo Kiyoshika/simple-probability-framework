@@ -10,17 +10,13 @@ float evaluate(struct param_t** params, const void* data)
 
 int main()
 {
-    // TODO: create different initializers
-    struct param_t* theta1 = spf_param_create(SCALAR);
-    spf_param_set_value(&theta1, 0.25f);
+    struct param_t* theta1 = spf_param_create_scalar(0.25f);
+    struct param_t* theta2 = spf_param_create_scalar(0.50f);
 
-    struct param_t* theta2 = spf_param_create(SCALAR);
-    spf_param_set_value(&theta2, 0.5f);
-
-    // TODO: create a utility function for this
-    struct param_t** param_list = malloc(sizeof(struct param_t*) * 2);
-    param_list[0] = theta1;
-    param_list[1] = theta2;
+    struct param_t** param_list = spf_param_create_list(
+        2,
+        theta1,
+        theta2);
 
     struct expression_t* theta_exp = spf_expression_create(param_list, 2, &evaluate);
 
